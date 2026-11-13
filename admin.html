@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel da ONG | Adoção Crescer Goiás</title>
+  <link rel="stylesheet" href="css/estilo.css">
+</head>
+<body>
+  <header class="topo">
+    <div class="container topo-inner">
+      <div>
+        <h1>Painel Administrativo</h1>
+        <p class="subtitulo">Gestão de animais, pedidos de adoção e fluxo de acessos</p>
+      </div>
+      <nav class="menu-topo">
+        <a href="index.html">Voltar ao Portal</a>
+        <button type="button" id="btn-sair" class="btn-secundario" hidden>Sair</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section id="tela-login" class="caixa-login">
+      <h2>Acesso restrito da equipe</h2>
+      <p>Entre com o e-mail e a senha cadastrados no painel para gerenciar o portal.</p>
+      <form id="form-login" novalidate>
+        <div class="campo">
+          <label for="login-email">E-mail</label>
+          <input type="email" id="login-email" required autocomplete="email">
+        </div>
+        <div class="campo">
+          <label for="login-senha">Senha</label>
+          <input type="password" id="login-senha" required autocomplete="current-password">
+        </div>
+        <p id="erro-login" class="msg-erro" role="alert"></p>
+        <button type="submit" class="btn-primario btn-bloco">Entrar</button>
+      </form>
+    </section>
+
+    <section id="painel-admin" hidden>
+      <div class="barra-admin">
+        <span>Conectado como: <strong id="usuario-logado"></strong></span>
+        <div class="abas" role="tablist">
+          <button type="button" class="aba ativa" data-aba="animais" role="tab">Animais</button>
+          <button type="button" class="aba" data-aba="solicitacoes" role="tab">Solicitações (<span id="total-solicitacoes">0</span>)</button>
+          <button type="button" class="aba" data-aba="logs" role="tab">Fluxo de Acessos (<span id="total-logs">0</span>)</button>
+        </div>
+      </div>
+
+      <div id="aba-animais" class="conteudo-aba">
+        <div class="admin-grid">
+          <div class="painel-bloco">
+            <h2>Cadastrar animal para adoção</h2>
+            <form id="form-animal" novalidate>
+              <div class="linha-dupla">
+                <div class="campo">
+                  <label for="pet-nome">Nome *</label>
+                  <input type="text" id="pet-nome" required maxlength="50">
+                </div>
+                <div class="campo">
+                  <label for="pet-especie">Espécie *</label>
+                  <select id="pet-especie" required>
+                    <option value="Cão">Cão</option>
+                    <option value="Gato">Gato</option>
+                    <option value="Outro">Outro</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="linha-dupla">
+                <div class="campo">
+                  <label for="pet-porte">Porte *</label>
+                  <select id="pet-porte" required>
+                    <option value="Pequeno">Pequeno</option>
+                    <option value="Médio">Médio</option>
+                    <option value="Grande">Grande</option>
+                  </select>
+                </div>
+                <div class="campo">
+                  <label for="pet-sexo">Sexo *</label>
+                  <select id="pet-sexo" required>
+                    <option value="Macho">Macho</option>
+                    <option value="Fêmea">Fêmea</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="linha-dupla">
+                <div class="campo">
+                  <label for="pet-idade">Idade aproximada *</label>
+                  <input type="text" id="pet-idade" required placeholder="Ex.: 8 meses, 2 anos">
+                </div>
+                <div class="campo">
+                  <label for="pet-bairro">Bairro / Local *</label>
+                  <input type="text" id="pet-bairro" required placeholder="Ex.: Vila Mariana">
+                </div>
+              </div>
+
+              <div class="linha-checks">
+                <label><input type="checkbox" id="pet-castrado"> Castrado</label>
+                <label><input type="checkbox" id="pet-vacinado"> Vacinado</label>
+              </div>
+
+              <div class="campo">
+                <label for="pet-foto-arquivo">Foto do animal (upload)</label>
+                <input type="file" id="pet-foto-arquivo" accept="image/*">
+              </div>
+
+              <div class="campo">
+                <label for="pet-foto-url">Ou cole a URL da foto</label>
+                <input type="url" id="pet-foto-url" placeholder="https://...">
+              </div>
+
+              <div class="campo">
+                <label for="pet-descricao">Descrição e temperamento *</label>
+                <textarea id="pet-descricao" rows="3" required maxlength="500" placeholder="Dócil, convive bem com crianças..."></textarea>
+              </div>
+
+              <p id="msg-animal" class="msg-status" role="status"></p>
+              <button type="submit" class="btn-primario btn-bloco">Salvar animal</button>
+            </form>
+          </div>
+
+          <div class="painel-bloco">
+            <h2>Animais cadastrados</h2>
+            <div id="lista-admin-animais" class="lista-admin"></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="aba-solicitacoes" class="conteudo-aba" hidden>
+        <div class="painel-bloco">
+          <h2>Solicitações de adoção recebidas</h2>
+          <div class="tabela-wrapper">
+            <table class="tabela-dados">
+              <thead>
+                <tr>
+                  <th>Data</th>
+                  <th>Animal</th>
+                  <th>Interessado</th>
+                  <th>WhatsApp</th>
+                  <th>Moradia</th>
+                  <th>Mensagem</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="lista-solicitacoes"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div id="aba-logs" class="conteudo-aba" hidden>
+        <div class="painel-bloco">
+          <div class="logs-cabecalho">
+            <div>
+              <h2>Registro de Fluxo de Acessos</h2>
+              <p>Histórico cronológico dos usuários que acessaram e interagiram com o portal.</p>
+            </div>
+            <div class="logs-acoes">
+              <input type="search" id="filtro-log" placeholder="Filtrar por nome ou ação...">
+              <button type="button" id="btn-atualizar-logs" class="btn-secundario">Atualizar</button>
+            </div>
+          </div>
+
+          <div class="tabela-wrapper">
+            <table class="tabela-dados">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Usuário</th>
+                  <th>Bairro / Origem</th>
+                  <th>Ação</th>
+                  <th>Animal</th>
+                  <th>Data</th>
+                  <th>Horário</th>
+                </tr>
+              </thead>
+              <tbody id="tabela-logs-corpo"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-config.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>

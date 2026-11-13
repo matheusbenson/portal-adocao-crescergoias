@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Adoção de Animais | Crescer Goiás</title>
+  <link rel="stylesheet" href="css/estilo.css">
+</head>
+<body>
+  <a href="#conteudo-principal" class="pular-conteudo">Ir para o conteúdo principal</a>
+
+  <div class="barra-acessibilidade">
+    <div class="container barra-acessibilidade-inner">
+      <div class="controles-fonte">
+        <span>Acessibilidade:</span>
+        <button type="button" id="btn-diminuir" aria-label="Diminuir tamanho da fonte">A-</button>
+        <button type="button" id="btn-aumentar" aria-label="Aumentar tamanho da fonte">A+</button>
+        <button type="button" id="btn-contraste" aria-pressed="false">Alto contraste</button>
+      </div>
+      <div class="info-visitante">
+        <span id="nome-visitante-topo">Visitante não identificado</span>
+        <button type="button" id="btn-trocar-visitante" class="btn-link">Identificar / Trocar</button>
+      </div>
+    </div>
+  </div>
+
+  <header class="topo">
+    <div class="container topo-inner">
+      <div>
+        <h1>Portal de Adoção de Animais</h1>
+        <p class="subtitulo">Ação comunitária em apoio à ONG Crescer Goiás · Aparecida de Goiânia - GO</p>
+      </div>
+      <nav class="menu-topo" aria-label="Navegação principal">
+        <a href="#animais">Animais</a>
+        <a href="#posse-responsavel">Adoção Responsável</a>
+        <a href="https://docs.google.com/forms/" target="_blank" rel="noopener" id="link-avaliacao">Avaliar Portal</a>
+        <a href="admin.html" class="btn-secundario">Área da ONG</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="conteudo-principal" class="container">
+    <section class="intro">
+      <div class="intro-texto">
+        <h2>Encontre um novo companheiro</h2>
+        <p>
+          Este portal facilita a conexão entre animais resgatados ou acompanhados pela comunidade local
+          e famílias dispostas a oferecer um lar seguro. Escolha um perfil abaixo e envie sua solicitação de adoção.
+        </p>
+      </div>
+    </section>
+
+    <section id="animais" aria-labelledby="titulo-filtros">
+      <h2 id="titulo-filtros" class="sr-only">Filtrar animais disponíveis</h2>
+      <form class="filtros" onsubmit="return false;">
+        <div class="campo">
+          <label for="filtro-especie">Espécie</label>
+          <select id="filtro-especie">
+            <option value="">Todas</option>
+            <option value="Cão">Cão</option>
+            <option value="Gato">Gato</option>
+            <option value="Outro">Outro</option>
+          </select>
+        </div>
+
+        <div class="campo">
+          <label for="filtro-porte">Porte</label>
+          <select id="filtro-porte">
+            <option value="">Todos</option>
+            <option value="Pequeno">Pequeno</option>
+            <option value="Médio">Médio</option>
+            <option value="Grande">Grande</option>
+          </select>
+        </div>
+
+        <div class="campo campo-busca">
+          <label for="filtro-busca">Buscar por nome ou bairro</label>
+          <input type="search" id="filtro-busca" placeholder="Ex.: Thor, Vila Mariana...">
+        </div>
+
+        <div class="campo campo-check">
+          <label>
+            <input type="checkbox" id="chk-adotados">
+            Mostrar já adotados
+          </label>
+        </div>
+      </form>
+
+      <p id="estado-lista" class="estado-lista" role="status">Carregando animais...</p>
+      <div id="lista-animais" class="grade-animais"></div>
+    </section>
+
+    <section id="posse-responsavel" class="bloco-info">
+      <h2>Antes de adotar</h2>
+      <div class="colunas-info">
+        <div>
+          <h3>Compromisso de longo prazo</h3>
+          <p>Cães e gatos vivem entre 12 e 18 anos. Avalie se sua rotina e orçamento comportam alimentação, vacinas e atendimento veterinário.</p>
+        </div>
+        <div>
+          <h3>Ambiente seguro</h3>
+          <p>Casas devem ter muros ou portões fechados para evitar fugas. Para gatos em apartamentos, o uso de telas de proteção é indispensável.</p>
+        </div>
+        <div>
+          <h3>Acompanhamento da ONG</h3>
+          <p>Após enviar seu interesse, a equipe responsável entra em contato pelo WhatsApp para conversar e combinar a entrevista ou visita.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="rodape">
+    <div class="container rodape-inner">
+      <p><strong>Portal Comunitário de Adoção – Crescer Goiás</strong></p>
+      <p>Aparecida de Goiânia - GO · Projeto de Extensão em Análise e Desenvolvimento de Sistemas</p>
+      <p class="aviso-feedback">
+        Testou o portal? <a href="https://docs.google.com/forms/" target="_blank" rel="noopener">Responda à pesquisa rápida de avaliação</a> para ajudar a melhorar o sistema.
+      </p>
+    </div>
+  </footer>
+
+  <div id="modal-visitante" class="modal" role="dialog" aria-modal="true" aria-labelledby="titulo-modal-visitante" hidden>
+    <div class="modal-caixa modal-pequena">
+      <h2 id="titulo-modal-visitante">Identificação do visitante</h2>
+      <p>Informe seu nome para registrar sua visita ao portal comunitário e visualizar os animais disponíveis.</p>
+      <form id="form-visitante" novalidate>
+        <div class="campo">
+          <label for="visitante-nome">Seu nome *</label>
+          <input type="text" id="visitante-nome" required minlength="2" maxlength="80" placeholder="Ex.: Maria Oliveira">
+        </div>
+        <div class="campo">
+          <label for="visitante-bairro">Bairro ou cidade (opcional)</label>
+          <input type="text" id="visitante-bairro" maxlength="80" placeholder="Ex.: Vila Mariana, Aparecida de Goiânia">
+        </div>
+        <p id="erro-visitante" class="msg-erro" role="alert"></p>
+        <button type="submit" class="btn-primario btn-bloco">Acessar portal</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="modal-adocao" class="modal" role="dialog" aria-modal="true" aria-labelledby="detalhe-nome" hidden>
+    <div class="modal-caixa">
+      <button type="button" id="btn-fechar-adocao" class="btn-fechar" aria-label="Fechar janela">&times;</button>
+      <div class="detalhe-grid">
+        <div class="detalhe-esquerda">
+          <img id="detalhe-foto" src="" alt="">
+          <h2 id="detalhe-nome"></h2>
+          <p id="detalhe-info" class="detalhe-meta"></p>
+          <p id="detalhe-descricao" class="detalhe-texto"></p>
+        </div>
+
+        <div class="detalhe-direita">
+          <h3>Demonstrar interesse na adoção</h3>
+          <form id="form-adocao" novalidate>
+            <input type="hidden" id="adocao-animal-id">
+            <input type="hidden" id="adocao-animal-nome">
+
+            <div class="campo">
+              <label for="adocao-nome">Nome completo *</label>
+              <input type="text" id="adocao-nome" required minlength="3" maxlength="80">
+            </div>
+
+            <div class="campo">
+              <label for="adocao-telefone">WhatsApp com DDD *</label>
+              <input type="tel" id="adocao-telefone" required placeholder="(62) 99999-9999" maxlength="20">
+            </div>
+
+            <div class="campo">
+              <label for="adocao-moradia">Tipo de moradia *</label>
+              <select id="adocao-moradia" required>
+                <option value="">Selecione...</option>
+                <option value="Casa com quintal fechado">Casa com quintal fechado</option>
+                <option value="Casa sem quintal">Casa sem quintal</option>
+                <option value="Apartamento telado">Apartamento com telas</option>
+                <option value="Apartamento sem tela">Apartamento sem telas</option>
+              </select>
+            </div>
+
+            <div class="campo">
+              <label for="adocao-mensagem">Observações (opcional)</label>
+              <textarea id="adocao-mensagem" rows="3" maxlength="400" placeholder="Conte se já tem outros animais, crianças ou horários para contato."></textarea>
+            </div>
+
+            <p id="msg-adocao" class="msg-status" role="status"></p>
+            <button type="submit" class="btn-primario btn-bloco">Enviar solicitação</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-config.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
